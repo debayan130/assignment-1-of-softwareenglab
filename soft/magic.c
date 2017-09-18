@@ -58,9 +58,10 @@ for(i=0;i<size;i++)
 
 void validate()
 {
-    int valid=0;
+
     int i,j,k;
     int ar[size*2+2];
+    int arsize=(size*2+2);
      for(i=0;i<(size*2+2);i++)
    {
         ar[i]=0;
@@ -75,15 +76,58 @@ void validate()
         ar[j+i]=colsum(arr,j);
        // printf("%d%d",ar[i+j+1],(i+j+1));
     }
+    ar[j+i]=leftdia();
+    ar[j+i+1]=rightdia();
    for(k=0;k<(size*2+2);k++)
    {
         printf("%d",ar[k]);
    }
-    
+    validmat(ar,arsize);    
     
 }
 
-int rowsum(int arr[100][100],int index)
+void validmat(int ar[],int arsize)//validation
+{
+    int i,valid=0;
+    for(i=0;i<arsize-1;i++)
+    {
+        if(ar[i]==ar[i+1]){
+            valid=1;
+        }else{
+            valid=0;
+        }
+    }
+    if(valid==1){
+    printf("This matrix is a magic square\n");
+    }else{
+        printf("Not a magic square\n");
+    }
+}
+
+
+int leftdia()   //rightdiagonalsum
+{
+    int i,sum=0;
+    for(i=0;i<size;i++)
+    {
+        sum=sum+arr[i][i];
+    }
+    return sum;
+
+}
+
+int rightdia()  //leftdiagonal
+{
+    int i,sum=0;
+    for(i=0;i<size;i++)
+    {
+        sum=sum+arr[i][size-1-i];
+    }
+    return sum;
+}
+
+
+int rowsum(int arr[100][100],int index) //calculates row sum
 {
     int i,x=0;
     for(i=0;i<size;i++)
@@ -94,7 +138,7 @@ int rowsum(int arr[100][100],int index)
 }
 
 
-int colsum(int arr[100][100],int index)
+int colsum(int arr[100][100],int index)//calculates sum of the columns
 {
     int i,x=0;
     for(i=0;i<size;i++)
